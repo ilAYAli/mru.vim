@@ -1,0 +1,2 @@
+GitPython==2.1.11
+ConfigArgParse==0.13.0
