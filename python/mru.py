@@ -14,19 +14,12 @@ class Meta():
     def __repr__(self):
         return str(vars(self))
     def add(self, path):
-        print("add: ", path)
-        maxval = 0
-        pos = -1
-        for i, (k, v) in enumerate(self.mru.items()):
-            if v > maxval and k != path:
-                maxval = v
-                pos = i
-            #print("k: ", k, " v: ", v, ", pos: ", pos, ", maxval: ", maxval, sep = "")
-        if pos < 0:
-            self.mru[path] = maxval + 1
-            return
-
-        self.mru[path] = maxval + 1
+        if len(self.mru) == 0:
+            self.mru[path] = 1
+        else:
+            it = max(self.mru, key=self.mru.get)
+            maxval = int(self.mru[it])
+            self.mru[path] = maxval +1
 
     def delete(self, path):
         try:
