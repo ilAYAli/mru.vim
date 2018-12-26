@@ -16,6 +16,8 @@ let g:mru_bin_args = ""
 let g:mru_bin_args = g:mru_bin_args . " --icons"
 let g:mru_bin_args = g:mru_bin_args . " --colors"
 let g:mru_bin_args = g:mru_bin_args . " --max 20"
+
+let g:mru_bin_args = " --colors --icons --max 20"
 let s:mru_bin = expand('<sfile>:p:h') . '/../python/mru.py'
 
 function! s:Add()
@@ -33,10 +35,14 @@ function! s:edit_devicon_prepended_file(item)
 endfunction
 
 function! s:MRU(...)
+    let l:fn = expand('%')
+    if len(l:fn)
+        let g:mru_bin_args = g:mru_bin_args . ' --exclude ' . expand('%')
+    endif
     if a:0 == 0
         let l:fzf_files_options = '--ansi'
         call fzf#run({
-          \ 'source': s:mru_bin . g:mru_bin_args ,
+          \ 'source': s:mru_bin . g:mru_bin_args,
           \ 'sink':   function('s:edit_devicon_prepended_file'),
           \ 'options': '-m ' . l:fzf_files_options,
           \ 'down':    '30%' })

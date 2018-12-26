@@ -56,6 +56,7 @@ def main(argv):
     parser.add_argument("-a", "--add",      help="add file to MRU", metavar='')
     parser.add_argument("-d", "--delete",   help="delete file from MRU", metavar='')
     parser.add_argument("-m", "--max",      help="max MRU size", action='store', type=int, metavar='')
+    parser.add_argument("-e", "--exclude",  help=configargparse.SUPPRESS, metavar='')
     parser.add_argument("-v", "--verbose",  help="verbose", action='store_true')
     parser.add_argument("-c", "--colors",   help="print with colors", action='store_true')
     parser.add_argument("-i", "--icons",    help="show icons (requires NERD fonts)", action='store_true')
@@ -82,6 +83,13 @@ def main(argv):
         sorted_mru = [(k, m.mru[k]) for k in sorted(m.mru, key=m.mru.get, reverse=True)]
         index = 0
         for path, v in sorted_mru:
+            if args.exclude:
+                if args.exclude in path:
+                    continue
+
+            if ".git/" in path:
+                continue
+
             if not os.path.isfile(path):
                 continue
             s = get_devicon(path) + " " if args.icons else ""
