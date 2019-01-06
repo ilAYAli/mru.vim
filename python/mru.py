@@ -14,9 +14,15 @@ class Meta():
     def __repr__(self):
         return str(vars(self))
     def add(self, path):
+        #print("root =", self.git_root, " path =", path)
         if os.path.isabs(path):
+            # ignore non-repo files
             if not path.startswith(self.git_root):
                 return
+            else:
+                # make path relative to repo root:
+                path = path[1 + len(self.git_root):]
+                #print("new path: ", path)
 
         if len(self.mru) == 0:
             self.mru[path] = 1
@@ -26,11 +32,12 @@ class Meta():
             self.mru[path] = maxval +1
 
     def delete(self, path):
+        #print("delete: ", path)
         try:
             del self.mru[path]
         except KeyError:
             print("key not found:", path)
-    max_elements = 30
+    max_elements = 999
     mru = dict()
     git_root = ""
 
@@ -80,6 +87,7 @@ def main(argv):
         m.max_elements = args.max
 
     if args.verbose:
+        print("config: ~/.mru.conf")
         print("database: ", mru_db)
 
     if dump_mru:
