@@ -14,6 +14,10 @@ class Meta():
     def __repr__(self):
         return str(vars(self))
     def add(self, path):
+        if os.path.isabs(path):
+            if not path.startswith(self.git_root):
+                return
+
         if len(self.mru) == 0:
             self.mru[path] = 1
         else:
@@ -28,6 +32,7 @@ class Meta():
             print("key not found:", path)
     max_elements = 30
     mru = dict()
+    git_root = ""
 
 def main(argv):
     m = Meta()
@@ -51,6 +56,8 @@ def main(argv):
             m.mru = json.load(fp)
     except OSError:
         pass
+
+    m.git_root = git_root
 
     parser = configargparse.ArgParser(default_config_files=['~/.mru.conf'])
     parser.add_argument("-a", "--add",      help="add file to MRU", metavar='')
