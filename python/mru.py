@@ -37,7 +37,7 @@ class Meta():
             del self.mru[path]
         except KeyError:
             print("key not found:", path)
-    max_elements = 999
+    max_elements = 200
     mru = dict()
     git_root = ""
 
