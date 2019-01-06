@@ -73,7 +73,9 @@ def main(argv):
     parser.add_argument("-e", "--exclude",  help=configargparse.SUPPRESS, metavar='')
     parser.add_argument("-v", "--verbose",  help="verbose", action='store_true')
     parser.add_argument("-c", "--colors",   help="print with colors", action='store_true')
+    parser.add_argument("-C", "--nocolors", help="disable colors", action='store_true')
     parser.add_argument("-i", "--icons",    help="show icons (requires NERD fonts)", action='store_true')
+    parser.add_argument("-I", "--noicons",  help="disable icons", action='store_true')
 
     dump_mru = True
     args = parser.parse_args()
@@ -89,6 +91,15 @@ def main(argv):
     if args.verbose:
         print("config: ~/.mru.conf")
         print("database: ", mru_db)
+
+    #if not sys.stdout.isatty():
+    #    args.colors = False
+
+    if args.nocolors:
+        args.colors = False
+
+    if args.noicons:
+        args.icons = False
 
     if dump_mru:
         color_normal = '\33[0m'
