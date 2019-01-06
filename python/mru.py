@@ -73,9 +73,10 @@ def main(argv):
     parser.add_argument("-e", "--exclude",  help=configargparse.SUPPRESS, metavar='')
     parser.add_argument("-v", "--verbose",  help="verbose", action='store_true')
     parser.add_argument("-c", "--colors",   help="print with colors", action='store_true')
-    parser.add_argument("-C", "--nocolors", help="disable colors", action='store_true')
     parser.add_argument("-i", "--icons",    help="show icons (requires NERD fonts)", action='store_true')
+    parser.add_argument("-C", "--nocolors", help="disable colors", action='store_true')
     parser.add_argument("-I", "--noicons",  help="disable icons", action='store_true')
+    parser.add_argument("-R", "--norel",    help="only show mru files", action='store_true')
 
     dump_mru = True
     args = parser.parse_args()
@@ -132,6 +133,9 @@ def main(argv):
             index += 1
             if index > m.max_elements:
                 break
+
+        if args.norel:
+            return
 
         if not git_root:
             out = subprocess.getoutput("find . -type f | head -n 1000")
