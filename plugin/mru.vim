@@ -15,9 +15,9 @@ let g:mru_use_colors = get(g:, 'mru_use_colors', 1)
 let g:mru_bin_args = ""
 let g:mru_bin_args = g:mru_bin_args . " --icons"
 let g:mru_bin_args = g:mru_bin_args . " --colors"
-let g:mru_bin_args = g:mru_bin_args . " --max 20"
+let g:mru_bin_args = g:mru_bin_args . " --max 1000"
 
-let g:mru_bin_args = " --colors --icons --max 20"
+let g:mru_bin_args = " --colors --icons --max 1000"
 let s:mru_bin = expand('<sfile>:p:h') . '/../python/mru.py'
 
 function! s:Add()

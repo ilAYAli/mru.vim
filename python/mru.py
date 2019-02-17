@@ -10,6 +10,11 @@ import json
 from collections import OrderedDict
 from devicons import get_devicon
 
+color_normal = '\33[0m'
+color_blue =   '\33[38;5;4m'
+color_orange = '\33[38;5;11m'
+
+
 class Meta():
     def __repr__(self):
         return str(vars(self))
@@ -36,7 +41,7 @@ class Meta():
         try:
             del self.mru[path]
         except KeyError:
-            print("key not found:", path)
+            print("path not found:", path)
     max_elements = 200
     mru = dict()
     git_root = ""
@@ -103,10 +108,6 @@ def main(argv):
         args.icons = False
 
     if dump_mru:
-        color_normal = '\33[0m'
-        color_blue =   '\33[38;5;4m'
-        color_orange = '\33[38;5;11m'
-
         sorted_mru = [(k, m.mru[k]) for k in sorted(m.mru, key=m.mru.get, reverse=True)]
         index = 0
         for path, v in sorted_mru:
