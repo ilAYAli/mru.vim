@@ -11,9 +11,8 @@ from collections import OrderedDict
 from devicons import get_devicon
 
 color_normal = '\33[0m'
-color_blue =   '\33[38;5;4m'
-color_orange = '\33[38;5;11m'
-
+color_blue =   '\33[38;5;75m'
+color_orange = '\33[38;5;214m'
 
 class Meta():
     def __repr__(self):
