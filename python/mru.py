@@ -18,7 +18,7 @@ class Meta():
     def __repr__(self):
         return str(vars(self))
     def add(self, path):
-        #print("root =", self.git_root, " path =", path)
+        print("root =", self.git_root, " path =", path)
         if os.path.isabs(path):
             # ignore non-repo files
             if not path.startswith(self.git_root):
@@ -26,7 +26,7 @@ class Meta():
             else:
                 # make path relative to repo root:
                 path = path[1 + len(self.git_root):]
-                #print("new path: ", path)
+                print("new path: ", path)
 
         if len(self.mru) == 0:
             self.mru[path] = 1
@@ -140,7 +140,7 @@ def main(argv):
         if not git_root:
             out = subprocess.getoutput("find . -type f | head -n 1000")
         else:
-            out = subprocess.getoutput("git ls-files")
+            out = subprocess.getoutput("git ls-files " + git_root)
 
         for path in out.splitlines():
             s = get_devicon(path) + " " if args.icons else ""
